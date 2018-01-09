@@ -96,6 +96,7 @@ class Platformsh
 
         foreach ($this->platformReadWriteDirs as $dir) {
             $this->execute(sprintf('mkdir -p ./init/%s', $dir));
+            $this->log(sprintf("Copying %s to ./init/%s", $dir, $dir));
             $this->execute(sprintf('/bin/bash -c "shopt -s dotglob; cp -R %s/* ./init/%s/"', $dir, $dir));
             $this->execute(sprintf('rm -rf %s', $dir));
             $this->execute(sprintf('mkdir %s', $dir));
@@ -129,6 +130,7 @@ class Platformsh
 
         foreach ($this->platformReadWriteDirs as $dir) {
             $this->execute(sprintf('mkdir -p %s', $dir));
+            $this->log(sprintf("Copying back ./init/%s to %s", $dir, $dir));
             $this->execute(sprintf('/bin/bash -c "shopt -s dotglob; cp -R ./init/%s/* %s/ || true"', $dir, $dir));
             $this->log(sprintf('Copied directory: %s', $dir));
         }
